@@ -5,6 +5,8 @@ C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\WebMenuAPI.deps.json
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\WebMenuAPI.runtimeconfig.json
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\WebMenuAPI.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\WebMenuAPI.pdb
+C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Humanizer.dll
@@ -33,6 +35,7 @@ C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\USER\Documents\APIIII\WebMenuAPI\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -121,6 +124,7 @@ C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\WebMenuAPI.AssemblyIn
 C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\WebMenuAPI.csproj.CoreCompileInputs.cache
 C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\WebMenuAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\WebMenuAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\WebMenuAPI.sourcelink.json
 C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\USER\Documents\APIIII\WebMenuAPI\obj\Debug\net8.0\staticwebassets\msbuild.WebMenuAPI.Microsoft.AspNetCore.StaticWebAssets.props

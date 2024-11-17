@@ -11,15 +11,15 @@ namespace WebMenuAPI.Context
         private readonly DbSettings _dbSettings = dbSettings.Value;
 
         // DbSet properties to represent the tables in the database
-        public DbSet<Usuario>? Usuarios { get; set; }
-        public DbSet<Orden>? Ordenes { get; set; }
-        public DbSet<DetalleOrden>? DetalleOrdenes { get; set; }
-        public DbSet<Producto>? Productos { get; set; }
-        public DbSet<Categoria>? Categorias { get; set; }
-        public DbSet<StatusOrden>? StatusOrdenes { get; set; }
-        public DbSet<Comentario>? Comentarios { get; set; }
-        public DbSet<Pago>? Pagos { get; set; }
-        public DbSet<Locacion>? Locaciones { get; set; }
+        public required DbSet<Usuario> Usuarios { get; set; }
+        public required DbSet<Orden> Ordenes { get; set; }
+        public required DbSet<DetalleOrden> DetalleOrdenes { get; set; }
+        public required DbSet<Producto> Productos { get; set; }
+        public required DbSet<Categoria> Categorias { get; set; }
+        public required DbSet<StatusOrden> StatusOrdenes { get; set; }
+        public required DbSet<Comentario> Comentarios { get; set; }
+        public required DbSet<Pago> Pagos { get; set; }
+        public required DbSet<Locacion> Locaciones { get; set; }
 
 
         // Configuring the database provider and connection string
