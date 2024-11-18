@@ -7,18 +7,11 @@ using AutoMapper;
 
 namespace WebMenuAPI.Services
 {
-    public class ComentarioServices : IComentarioServices
+    public class ComentarioServices(ContextoBD context, ILogger<ComentarioServices> logger, IMapper mapper) : IComentarioServices
     {
-        private readonly ContextoBD _context;
-        private readonly ILogger<ComentarioServices> _logger;
-        private readonly IMapper _mapper;
-
-        public ComentarioServices(ContextoBD context, ILogger<ComentarioServices> logger, IMapper mapper)
-        {
-            _context = context;
-            _logger = logger;
-            _mapper = mapper;
-        }
+        private readonly ContextoBD _context = context;
+        private readonly ILogger<ComentarioServices> _logger = logger;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<IEnumerable<Comentario>> GetAllAsync()
         {
@@ -27,7 +20,7 @@ namespace WebMenuAPI.Services
             if (_context.Comentarios == null)
             {
                 _logger.LogWarning("Comentarios DbSet is null.");
-                return new List<Comentario>();
+                return [];
             }
 
             var comentarios = await _context.Comentarios.ToListAsync();
@@ -105,18 +98,11 @@ namespace WebMenuAPI.Services
             _logger.LogInformation($"Comentario with ID {id} has been deleted.");
         }
     }
-    public class PagoServices : IPagoServices
+    public class PagoServices(ContextoBD context, ILogger<PagoServices> logger, IMapper mapper) : IPagoServices
     {
-        private readonly ContextoBD _context;
-        private readonly ILogger<PagoServices> _logger;
-        private readonly IMapper _mapper;
-
-        public PagoServices(ContextoBD context, ILogger<PagoServices> logger, IMapper mapper)
-        {
-            _context = context;
-            _logger = logger;
-            _mapper = mapper;
-        }
+        private readonly ContextoBD _context = context;
+        private readonly ILogger<PagoServices> _logger = logger;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<IEnumerable<Pago>> GetAllAsync()
         {
@@ -125,7 +111,7 @@ namespace WebMenuAPI.Services
             if (_context.Pagos == null)
             {
                 _logger.LogWarning("Pagos DbSet is null.");
-                return new List<Pago>();
+                return [];
             }
 
             var pagos = await _context.Pagos.ToListAsync();
@@ -185,18 +171,11 @@ namespace WebMenuAPI.Services
         }
     }
 
-    public class LocacionServices : ILocacionServices
+    public class LocacionServices(ContextoBD context, ILogger<LocacionServices> logger, IMapper mapper) : ILocacionServices
     {
-        private readonly ContextoBD _context;
-        private readonly ILogger<LocacionServices> _logger;
-        private readonly IMapper _mapper;
-
-        public LocacionServices(ContextoBD context, ILogger<LocacionServices> logger, IMapper mapper)
-        {
-            _context = context;
-            _logger = logger;
-            _mapper = mapper;
-        }
+        private readonly ContextoBD _context = context;
+        private readonly ILogger<LocacionServices> _logger = logger;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<IEnumerable<Locacion>> GetAllAsync()
         {
@@ -205,7 +184,7 @@ namespace WebMenuAPI.Services
             if (_context.Locaciones == null)
             {
                 _logger.LogWarning("Locaciones DbSet is null.");
-                return new List<Locacion>();
+                return [];
             }
 
             var locaciones = await _context.Locaciones.ToListAsync();
@@ -284,18 +263,11 @@ namespace WebMenuAPI.Services
         }
     }
 
-    public class UsuarioServices : IUsuarioServices
+    public class UsuarioServices(ContextoBD context, ILogger<UsuarioServices> logger, IMapper mapper) : IUsuarioServices
     {
-        private readonly ContextoBD _context;
-        private readonly ILogger<UsuarioServices> _logger;
-        private readonly IMapper _mapper;
-
-        public UsuarioServices(ContextoBD context, ILogger<UsuarioServices> logger, IMapper mapper)
-        {
-            _context = context;
-            _logger = logger;
-            _mapper = mapper;
-        }
+        private readonly ContextoBD _context = context;
+        private readonly ILogger<UsuarioServices> _logger = logger;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
@@ -304,7 +276,7 @@ namespace WebMenuAPI.Services
             if (_context.Usuarios == null)
             {
                 _logger.LogWarning("Usuarios DbSet is null.");
-                return new List<Usuario>();
+                return [];
             }
 
             var usuarios = await _context.Usuarios.ToListAsync();
@@ -383,18 +355,11 @@ namespace WebMenuAPI.Services
         }
     }
 
-    public class ProductoServices : IProductoServices
+    public class ProductoServices(ContextoBD context, ILogger<ProductoServices> logger, IMapper mapper) : IProductoServices
     {
-        private readonly ContextoBD _context;
-        private readonly ILogger<ProductoServices> _logger;
-        private readonly IMapper _mapper;
-
-        public ProductoServices(ContextoBD context, ILogger<ProductoServices> logger, IMapper mapper)
-        {
-            _context = context;
-            _logger = logger;
-            _mapper = mapper;
-        }
+        private readonly ContextoBD _context = context;
+        private readonly ILogger<ProductoServices> _logger = logger;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<IEnumerable<Producto>> GetAllAsync()
         {
@@ -403,7 +368,7 @@ namespace WebMenuAPI.Services
             if (_context.Productos == null)
             {
                 _logger.LogWarning("Productos DbSet is null.");
-                return new List<Producto>();
+                return [];
             }
 
             var productos = await _context.Productos.ToListAsync();
@@ -482,18 +447,11 @@ namespace WebMenuAPI.Services
         }
     }
 
-    public class OrdenServices : IOrdenServices
+    public class OrdenServices(ContextoBD context, ILogger<OrdenServices> logger, IMapper mapper) : IOrdenServices
     {
-        private readonly ContextoBD _context;
-        private readonly ILogger<OrdenServices> _logger;
-        private readonly IMapper _mapper;
-
-        public OrdenServices(ContextoBD context, ILogger<OrdenServices> logger, IMapper mapper)
-        {
-            _context = context;
-            _logger = logger;
-            _mapper = mapper;
-        }
+        private readonly ContextoBD _context = context;
+        private readonly ILogger<OrdenServices> _logger = logger;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<IEnumerable<Orden>> GetAllAsync()
         {
@@ -502,7 +460,7 @@ namespace WebMenuAPI.Services
             if (_context.Ordenes == null)
             {
                 _logger.LogWarning("Ordenes DbSet is null.");
-                return new List<Orden>();
+                return [];
             }
 
             var ordenes = await _context.Ordenes.ToListAsync();
@@ -581,27 +539,20 @@ namespace WebMenuAPI.Services
         }
     }
 
- public class OrdenDetalleServices : IOrdenDetalleServices
+ public class OrdenDetalleServices(ContextoBD context, ILogger<OrdenDetalleServices> logger, IMapper mapper) : IOrdenDetalleServices
 {
-    private readonly ContextoBD _context;
-    private readonly ILogger<OrdenDetalleServices> _logger;
-    private readonly IMapper _mapper;
+    private readonly ContextoBD _context = context;
+    private readonly ILogger<OrdenDetalleServices> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
-    public OrdenDetalleServices(ContextoBD context, ILogger<OrdenDetalleServices> logger, IMapper mapper)
-    {
-        _context = context;
-        _logger = logger;
-        _mapper = mapper;
-    }
-
-    public async Task<IEnumerable<DetalleOrden>> GetAllAsync()
+        public async Task<IEnumerable<DetalleOrden>> GetAllAsync()
     {
         _logger.LogInformation("Retrieving all order details from the database.");
 
         if (_context.DetalleOrdenes == null)
         {
             _logger.LogWarning("OrdenDetalles DbSet is null.");
-            return new List<DetalleOrden>(); 
+            return []; 
         }
 
         var ordenDetalles = await _context.DetalleOrdenes.ToListAsync();
@@ -680,5 +631,78 @@ namespace WebMenuAPI.Services
     }
 }
 
+public class StatusOrdenServices(ContextoBD context, ILogger<StatusOrdenServices> logger, IMapper mapper) : IStatusOrdenServices
+{
+    private readonly ContextoBD _context = context;
+    private readonly ILogger<StatusOrdenServices> _logger = logger;
+    private readonly IMapper _mapper = mapper;
+
+        public async Task<IEnumerable<StatusOrden>> GetAllAsync()
+    {
+        _logger.LogInformation("Retrieving all order statuses from the database.");
+
+        if (_context.StatusOrdenes == null)
+        {
+            _logger.LogWarning("StatusOrdenes DbSet is null.");
+            return [];
+        }
+
+        var statusOrdenes = await _context.StatusOrdenes.ToListAsync();
+        _logger.LogInformation($"Retrieved {statusOrdenes.Count} order statuses.");
+
+        return statusOrdenes;
+    }
+
+    public async Task<StatusOrden> GetByIdAsync(int id)
+    {
+        _logger.LogInformation($"Retrieving order status with ID {id}.");
+
+        var statusOrden = await _context.StatusOrdenes.FindAsync(id);
+        if (statusOrden == null)
+        {
+            _logger.LogWarning($"StatusOrden with ID {id} not found.");
+            throw new Exception("Status de orden no encontrado");
+        }
+
+        return statusOrden;
+    }
+}
+
+public class CategoriaServices(ContextoBD context, ILogger<CategoriaServices> logger, IMapper mapper) : ICategoriaServices
+{
+    private readonly ContextoBD _context = context;
+    private readonly ILogger<CategoriaServices> _logger = logger;
+    private readonly IMapper _mapper = mapper;
+
+        public async Task<IEnumerable<Categoria>> GetAllAsync()
+    {
+        _logger.LogInformation("Retrieving all categories from the database.");
+
+        if (_context.Categorias == null)
+        {
+            _logger.LogWarning("Categorias DbSet is null.");
+            return [];
+        }
+
+        var categorias = await _context.Categorias.ToListAsync();
+        _logger.LogInformation($"Retrieved {categorias.Count} categories.");
+
+        return categorias;
+    }
+
+    public async Task<Categoria> GetByIdAsync(int id)
+    {
+        _logger.LogInformation($"Retrieving category with ID {id}.");
+
+        var categoria = await _context.Categorias.FindAsync(id);
+        if (categoria == null)
+        {
+            _logger.LogWarning($"Categoria with ID {id} not found.");
+            throw new Exception("Categoría no encontrada");
+        }
+
+        return categoria;
+    }
+}
 
 }

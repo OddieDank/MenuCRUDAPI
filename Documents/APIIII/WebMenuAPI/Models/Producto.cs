@@ -16,8 +16,11 @@ namespace WebMenuAPI.Models
         [Required]
         [StringLength(100)]
         public required string Nombre { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
 
         public required decimal Precio { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+
         public required decimal Cantidad { get; set; }
 
         public required DateTime UpdatedOn { get; set; }

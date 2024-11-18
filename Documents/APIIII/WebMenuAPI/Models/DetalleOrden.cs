@@ -16,6 +16,7 @@ namespace WebMenuAPI.Models
         [ForeignKey("Producto")]
         public int ProductoId { get; set; }
         public required Producto Producto { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
 
         public required decimal Cantidad { get; set; }
 

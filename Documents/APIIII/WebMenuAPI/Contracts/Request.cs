@@ -24,14 +24,10 @@ public class CrearUsuarioReq
     [StringLength(255)]
     public required string Password { get; set; }
 
-    [Required]
-    public required  DateTime UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public DateTime? DeletedOn { get; set; }
 
-    [Required]
-    [StringLength(100)]
-    public required  string Perfil { get; set; }
 }
 
 public class CrearProductoReq
@@ -52,7 +48,8 @@ public class CrearProductoReq
     [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor que 0.")]
     public decimal Cantidad { get; set; }
 
-    public DateTime UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
+
 
     [Required]
     public bool Activo { get; set; }
@@ -71,8 +68,7 @@ public class CrearPagoReq
     [StringLength(50)]
     public required string MetodoPago { get; set; }
 
-    [Required]
-    public required DateTime UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 }
 
 public class CrearOrdenReq
@@ -87,8 +83,8 @@ public class CrearOrdenReq
     [Range(0.01, double.MaxValue)]
     public decimal TotalPrice { get; set; }
 
-    [Required]
-    public DateTime UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
+
 
     public DateTime? DeletedOn { get; set; }
 
@@ -112,8 +108,8 @@ public class CrearOrdenDetalleReq{
     [Range(0.01, double.MaxValue)]
     public decimal Cantidad { get; set; }
 
-    [Required]
-    public DateTime UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
+
 }
 
 
@@ -123,7 +119,7 @@ public class CrearLocacionReq
     [StringLength(50)]
     public required string Mesa { get; set; }
 
-    public DateTime UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 }
 
 public class CrearComentarioReq{
@@ -138,8 +134,8 @@ public class CrearComentarioReq{
     [StringLength(500, ErrorMessage = "El comentario no puede superar los 500 caracteres.")]
     public required string ComentarioText { get; set; }
 
-    [Required]
-    public DateTime UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
+
 
     public DateTime? DeletedOn { get; set; }
 }
@@ -160,7 +156,7 @@ public class ActualizarUsuarioReq
     [StringLength(255)]
     public required string Password { get; set; }
 
-    public required DateTime? UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public DateTime? DeletedOn { get; set; }
 }
@@ -175,7 +171,7 @@ public class ActualizarProductoReq
     [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor que 0.")]
     public decimal? Cantidad { get; set; }
 
-    public DateTime? UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public bool? Activo { get; set; }
 
@@ -189,7 +185,7 @@ public class ActualizarOrdenReq
     [Range(0.01, double.MaxValue)]
     public decimal? TotalPrice { get; set; }
 
-    public DateTime? UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public DateTime? DeletedOn { get; set; }
 
@@ -210,7 +206,7 @@ public class ActualizarOrdenDetalleReq
     [Range(0.1, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0.")]
     public decimal Cantidad { get; set; }
 
-    public DateTime? UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public DateTime? DeletedOn { get; set; }
 }
@@ -220,7 +216,7 @@ public class ActualizarLocacionReq
     [StringLength(50)]
     public required string Mesa { get; set; }
 
-    public DateTime? UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public DateTime? DeletedOn { get; set; }
 }
@@ -233,7 +229,7 @@ public class ActualizarComentarioReq
     [StringLength(500, ErrorMessage = "El comentario no puede superar los 500 caracteres.")]
     public required string ComentarioText { get; set; }
 
-    public DateTime? UpdatedOn { get; set; }
+    public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public DateTime? DeletedOn { get; set; }
 }

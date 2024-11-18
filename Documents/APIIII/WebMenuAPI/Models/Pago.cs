@@ -12,6 +12,7 @@ namespace WebMenuAPI.Models
         [ForeignKey("Orden")]
         public int OrdenId { get; set; }
         public required Orden Orden { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
 
         public required decimal Monto { get; set; }
 

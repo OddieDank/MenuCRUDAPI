@@ -15,6 +15,8 @@ namespace WebMenuAPI.Models
         [ForeignKey("StatusOrden")]
         public int StatusId { get; set; }
         public required StatusOrden StatusOrden { get; set; }
+        
+        [Column(TypeName = "decimal(18,2)")]
 
         public required decimal TotalPrice { get; set; }
 

@@ -61,4 +61,15 @@ namespace WebMenuAPI.Interfaces
         Task UpdateOrdenDetalleAsync(int id, ActualizarOrdenDetalleReq request);
         Task DeleteOrdenDetalleAsync(int id);
     }
+        public interface IStatusOrdenServices
+    {
+        Task<IEnumerable<StatusOrden>> GetAllAsync();
+        Task<StatusOrden> GetByIdAsync(int id);
+    }
+
+        public interface ICategoriaServices
+        {
+            Task<IEnumerable<Categoria>> GetAllAsync();
+            Task<Categoria> GetByIdAsync(int id);
+        }
 }
