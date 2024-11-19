@@ -269,21 +269,56 @@ namespace WebMenuAPI.Services
         private readonly ILogger<UsuarioServices> _logger = logger;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<IEnumerable<Usuario>> GetAllAsync()
+    
+        public async Task<IEnumerable<Usuario>> GetAllUsersAsync()
+    {
+        _logger.LogInformation("Retrieving all users from the database without filters.");
+
+        if (_context.Usuarios == null)
         {
-            _logger.LogInformation("Retrieving all users from the database.");
-
-            if (_context.Usuarios == null)
-            {
-                _logger.LogWarning("Usuarios DbSet is null.");
-                return [];
-            }
-
-            var usuarios = await _context.Usuarios.ToListAsync();
-            _logger.LogInformation($"Retrieved {usuarios.Count} users.");
-
-            return usuarios;
+            _logger.LogWarning("Usuarios DbSet is null.");
+            return new List<Usuario>(); // Devuelve una lista vacía si no hay usuarios
         }
+
+        var usuarios = await _context.Usuarios.ToListAsync();
+
+        _logger.LogInformation($"Retrieved {usuarios.Count} users.");
+
+        return usuarios;
+    }
+    
+    
+    
+    public async Task<IEnumerable<Usuario>> GetAllAsync(string? email = null, string? password = null)
+    {
+        _logger.LogInformation("Retrieving users from the database with optional filters.");
+
+        if (_context.Usuarios == null)
+        {
+            _logger.LogWarning("Usuarios DbSet is null.");
+            return new List<Usuario>(); // Devuelve una lista vacía si no hay usuarios
+        }
+
+        var query = _context.Usuarios.AsQueryable();
+
+        // Solo aplica los filtros si los parámetros no son nulos ni vacíos
+        if (!string.IsNullOrEmpty(email))
+        {
+            query = query.Where(u => u.Email == email);
+        }
+
+        if (!string.IsNullOrEmpty(password))
+        {
+            query = query.Where(u => u.Password == password);
+        }
+
+        var usuarios = await query.ToListAsync();
+
+        _logger.LogInformation($"Retrieved {usuarios.Count} users with the specified filters.");
+
+        return usuarios;
+    }
+
 
         public async Task<Usuario> GetByIdAsync(int id)
         {
@@ -353,6 +388,11 @@ namespace WebMenuAPI.Services
 
             _logger.LogInformation($"Usuario with ID {id} has been deleted.");
         }
+
+        public Task<IEnumerable<Usuario>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ProductoServices(ContextoBD context, ILogger<ProductoServices> logger, IMapper mapper) : IProductoServices
@@ -363,19 +403,24 @@ namespace WebMenuAPI.Services
 
         public async Task<IEnumerable<Producto>> GetAllAsync()
         {
-            _logger.LogInformation("Retrieving all products from the database.");
+            _logger.LogInformation("Retrieving all products with their categories from the database.");
 
             if (_context.Productos == null)
             {
                 _logger.LogWarning("Productos DbSet is null.");
-                return [];
+                return new List<Producto>(); // Retorna una lista vacía si no hay productos
             }
 
-            var productos = await _context.Productos.ToListAsync();
+            // Usamos Include para cargar la propiedad 'Categoria' junto con los productos
+            var productos = await _context.Productos
+                                        .Include(p => p.Categoria) // Eager loading de la categoría
+                                        .ToListAsync();
+
             _logger.LogInformation($"Retrieved {productos.Count} products.");
 
             return productos;
         }
+
 
         public async Task<Producto> GetByIdAsync(int id)
         {
@@ -394,7 +439,23 @@ namespace WebMenuAPI.Services
         public async Task CreateProductoAsync(CrearProductoReq request)
         {
             _logger.LogInformation("Creating a new product.");
+            const int maxSize = 2 * 1024 * 1024; 
 
+            if (request.Imagen != null && request.Imagen.Length > maxSize)
+            {
+                throw new ArgumentException("El tamaño de la imagen es demasiado grande. Máximo permitido: 2 MB.");
+            }
+            if (request.Imagen != null)
+            {
+                try
+                {
+                    byte[] imagenBytes = Convert.FromBase64String(request.Imagen);
+                }
+                catch (FormatException)
+                {
+                    throw new ArgumentException("La imagen proporcionada no es una cadena base64 válida.");
+                }
+            }
             if (_context.Productos == null)
             {
                 _logger.LogError("Productos DbSet is not available.");
@@ -421,6 +482,27 @@ namespace WebMenuAPI.Services
                 throw new Exception("Producto no encontrado");
             }
 
+            const int maxSize = 2 * 1024 * 1024; // 2 MB
+
+            if (request.Imagen != null && request.Imagen.Length > maxSize)
+            {
+                throw new ArgumentException("El tamaño de la imagen es demasiado grande. Máximo permitido: 2 MB.");
+            }
+
+            if (request.Imagen != null)
+            {
+                try
+                {
+                    byte[] imagenBytes = Convert.FromBase64String(request.Imagen);
+                    producto.Imagen = imagenBytes;
+                }
+                catch (FormatException)
+                {
+                    throw new ArgumentException("La imagen proporcionada no es una cadena base64 válida.");
+                }
+            }
+
+            // Mapear el resto de los campos de la solicitud
             producto = _mapper.Map(request, producto);
             producto.UpdatedOn = DateTime.UtcNow;
 
@@ -428,6 +510,7 @@ namespace WebMenuAPI.Services
 
             _logger.LogInformation($"Producto with ID {id} has been updated.");
         }
+
 
         public async Task DeleteProductoAsync(int id)
         {
@@ -539,38 +622,70 @@ namespace WebMenuAPI.Services
         }
     }
 
- public class OrdenDetalleServices(ContextoBD context, ILogger<OrdenDetalleServices> logger, IMapper mapper) : IOrdenDetalleServices
+    public class OrdenDetalleServices(ContextoBD context, ILogger<OrdenDetalleServices> logger, IMapper mapper) : IOrdenDetalleServices
 {
     private readonly ContextoBD _context = context;
     private readonly ILogger<OrdenDetalleServices> _logger = logger;
     private readonly IMapper _mapper = mapper;
 
-        public async Task<IEnumerable<DetalleOrden>> GetAllAsync()
+    public async Task<IEnumerable<DetalleOrden>> GetAllAsync()
     {
-        _logger.LogInformation("Retrieving all order details from the database.");
+        _logger.LogInformation("Retrieving all order details with their orders and products from the database.");
 
         if (_context.DetalleOrdenes == null)
         {
             _logger.LogWarning("OrdenDetalles DbSet is null.");
-            return []; 
+            return new List<DetalleOrden>(); // Retorna una lista vacía si no hay detalles de orden
         }
 
-        var ordenDetalles = await _context.DetalleOrdenes.ToListAsync();
+        // Usamos Include para cargar las entidades relacionadas 'Orden' y 'Producto'
+        var ordenDetalles = await _context.DetalleOrdenes
+                                          .Include(dt => dt.Orden)  // Eager loading de la orden
+                                          .Include(dt => dt.Producto) // Eager loading del producto
+                                          .ToListAsync();
+
         _logger.LogInformation($"Retrieved {ordenDetalles.Count} order details.");
 
-        return _mapper.Map<IEnumerable<DetalleOrden>>(ordenDetalles); 
+        return _mapper.Map<IEnumerable<DetalleOrden>>(ordenDetalles);
+    }
+
+    public async Task<IEnumerable<DetalleOrden>> GetByOrdenIdAsync(int ordenId)
+    {
+        _logger.LogInformation($"Retrieving order details for OrdenId {ordenId}.");
+
+        var detallesOrden = await _context.DetalleOrdenes
+            .Where(d => d.OrdenId == ordenId)
+            .Include(d => d.Orden)
+            .Include(d => d.Producto)
+            .ToListAsync();
+
+        if (detallesOrden == null || detallesOrden.Count == 0)
+        {
+            _logger.LogWarning($"No details found for OrdenId {ordenId}.");
+            throw new Exception("No se encontraron detalles de la orden");
+        }
+
+        _logger.LogInformation($"Retrieved {detallesOrden.Count} details for OrdenId {ordenId}.");
+
+        return _mapper.Map<IEnumerable<DetalleOrden>>(detallesOrden);
     }
 
     public async Task<DetalleOrden> GetByIdAsync(int id)
     {
         _logger.LogInformation($"Retrieving order detail with ID {id}.");
 
-        var ordenDetalle = await _context.DetalleOrdenes.FindAsync(id);
+        var ordenDetalle = await _context.DetalleOrdenes
+            .Include(dt => dt.Orden)  // Cargar la orden relacionada
+            .Include(dt => dt.Producto) // Cargar el producto relacionado
+            .FirstOrDefaultAsync(dt => dt.OrdenDtId == id); // Usamos FirstOrDefaultAsync para buscar por el id
+
         if (ordenDetalle == null)
         {
             _logger.LogWarning($"OrdenDetalle with ID {id} not found.");
             throw new Exception("OrdenDetalle no encontrado");
         }
+
+        _logger.LogInformation($"Retrieved order detail with ID {id}.");
 
         return _mapper.Map<DetalleOrden>(ordenDetalle);
     }
@@ -630,6 +745,7 @@ namespace WebMenuAPI.Services
         _logger.LogInformation($"OrdenDetalle with ID {id} has been deleted.");
     }
 }
+
 
 public class StatusOrdenServices(ContextoBD context, ILogger<StatusOrdenServices> logger, IMapper mapper) : IStatusOrdenServices
 {

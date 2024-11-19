@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using WebMenuAPI.Interfaces; 
 using WebMenuAPI.Models;
-using WebMenuAPI.Contracts;    
+using WebMenuAPI.Contracts;
+using Microsoft.AspNetCore.Cors;
+
 
 namespace WebMenuAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [EnableCors("PermitirOrigenLocal")]
     public class MenuController(
         IComentarioServices comentarioServices,
         IPagoServices pagoServices,
@@ -28,19 +31,38 @@ namespace WebMenuAPI.Controllers
         private readonly ICategoriaServices _categoriaServices = categoriaServices;
         private readonly IOrdenDetalleServices _ordenDetalleServices = ordenDetalleServices;
 
+    [HttpGet("usuariosEmailPass")]
+        public async Task<IActionResult> GetAllAsync([FromQuery] string email, [FromQuery] string password)
+        {
+            try
+            {
+                var userList = await _usuarioServices.GetAllAsync(email, password);
+                if (userList == null || !userList.Any())
+                {
+                    return NotFound(new { message = "Usuario no encontrado" });
+                }
+                return Ok(userList);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al obtener los usuarios", error = ex.Message });
+            }
+        }
         [HttpGet("usuarios")]
         public async Task<IActionResult> GetAllUsersAsync()
         {
             try
             {
-                var userList = await _usuarioServices.GetAllAsync();
-                return Ok(userList);
+                var productos = await _usuarioServices.GetAllUsersAsync();
+                return Ok(productos);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Error al obtener los estados", error = ex.Message });
+                return StatusCode(500, new { message = "Error al obtener los productos", error = ex.Message });
             }
         }
+
+
         
         [HttpGet("usuarios/{id}")]
         public async Task<IActionResult> GetUserAsync(int id)
@@ -588,6 +610,22 @@ namespace WebMenuAPI.Controllers
             }
         }
 
+        [HttpGet("detalleorden/orden/{ordenId}")]
+        public async Task<IActionResult> GetDetalleOrdenByOrdenIdAsync(int ordenId)
+        {
+            try
+            {
+                var detallesOrden = await _ordenDetalleServices.GetByOrdenIdAsync(ordenId);
+                return Ok(detallesOrden);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al obtener los detalles de la orden", error = ex.Message });
+            }
+        }
+
+
+
         [HttpPut("detalleorden/{id}")]
         public async Task<IActionResult> UpdateDetalleOrdenAsync(int id, [FromBody] ActualizarOrdenDetalleReq request)
         {
@@ -604,6 +642,8 @@ namespace WebMenuAPI.Controllers
                 return StatusCode(500, new { message = "Error al actualizar el detalle de la orden", error = ex.Message });
             }
         }
+
+        
 
         [HttpDelete("detalleorden/{id}")]
         public async Task<IActionResult> DeleteDetalleOrdenAsync(int id)

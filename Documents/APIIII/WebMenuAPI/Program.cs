@@ -22,6 +22,14 @@ builder.Services.AddScoped<IOrdenServices, OrdenServices>();
 builder.Services.AddScoped<IOrdenDetalleServices, OrdenDetalleServices>();
 builder.Services.AddScoped<IStatusOrdenServices, StatusOrdenServices>();
 builder.Services.AddScoped<ICategoriaServices, CategoriaServices>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirOrigenLocal",
+        policy => policy.WithOrigins("http://127.0.0.1:5500")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
+
 
 var app = builder.Build();
 
@@ -29,6 +37,9 @@ var app = builder.Build();
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<ContextoBD>();
 }
+
+
+app.UseCors("PermitirOrigenLocal");
 
 app.UseMiddleware<GlobalExceptionHandler>();  
 

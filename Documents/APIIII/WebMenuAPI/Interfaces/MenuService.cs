@@ -29,7 +29,8 @@ namespace WebMenuAPI.Interfaces
     }
         public interface IUsuarioServices
     {
-        Task<IEnumerable<Usuario>> GetAllAsync();
+        Task<IEnumerable<Usuario>> GetAllUsersAsync();
+        Task<IEnumerable<Usuario>> GetAllAsync(string? email = null, string? password = null);
         Task<Usuario> GetByIdAsync(int id);
         Task CreateUsuarioAsync(CrearUsuarioReq request);
         Task UpdateUsuarioAsync(int id, ActualizarUsuarioReq request);
@@ -53,14 +54,15 @@ namespace WebMenuAPI.Interfaces
         Task UpdateOrdenAsync(int id, ActualizarOrdenReq request);
         Task DeleteOrdenAsync(int id);
     }
-        public interface IOrdenDetalleServices
-    {
-        Task<IEnumerable<DetalleOrden>> GetAllAsync();
-        Task<DetalleOrden> GetByIdAsync(int id);
-        Task CreateOrdenDetalleAsync(CrearOrdenDetalleReq request);
-        Task UpdateOrdenDetalleAsync(int id, ActualizarOrdenDetalleReq request);
-        Task DeleteOrdenDetalleAsync(int id);
-    }
+public interface IOrdenDetalleServices
+{
+    Task<IEnumerable<DetalleOrden>> GetAllAsync();
+    Task<DetalleOrden> GetByIdAsync(int id);
+    Task<IEnumerable<DetalleOrden>> GetByOrdenIdAsync(int ordenId); // Método agregado
+    Task CreateOrdenDetalleAsync(CrearOrdenDetalleReq request);
+    Task UpdateOrdenDetalleAsync(int id, ActualizarOrdenDetalleReq request);
+    Task DeleteOrdenDetalleAsync(int id);
+}
         public interface IStatusOrdenServices
     {
         Task<IEnumerable<StatusOrden>> GetAllAsync();

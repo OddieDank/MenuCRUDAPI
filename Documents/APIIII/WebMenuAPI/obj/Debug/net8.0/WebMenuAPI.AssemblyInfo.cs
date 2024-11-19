@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebMenuAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5437af5c851d40e2cce7c84c0eecd9d46a4ad7e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61b6206c931356034b635b6ec551aef486ef5d48")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebMenuAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebMenuAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

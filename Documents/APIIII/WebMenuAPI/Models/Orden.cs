@@ -18,7 +18,7 @@ namespace WebMenuAPI.Models
         
         [Column(TypeName = "decimal(18,2)")]
 
-        public required decimal TotalPrice { get; set; }
+        public decimal? TotalPrice { get; set; }
 
         public required DateTime UpdatedOn { get; set; }
         public DateTime? DeletedOn { get; set; }

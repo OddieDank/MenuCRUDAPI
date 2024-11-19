@@ -39,6 +39,9 @@ public class CrearProductoReq
     [Required]
     [StringLength(100)]
     public required string Nombre { get; set; }
+    [Required]
+    [StringLength(256)]
+    public required string Descripcion { get; set; }
 
     [Required]
     [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor que 0.")]
@@ -48,6 +51,7 @@ public class CrearProductoReq
     [Range(0.01, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor que 0.")]
     public decimal Cantidad { get; set; }
 
+    public string? Imagen { get; set; }
     public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
 
@@ -79,16 +83,7 @@ public class CrearOrdenReq
     [Required]
     public int StatusId { get; set; }
 
-    [Required]
-    [Range(0.01, double.MaxValue)]
-    public decimal TotalPrice { get; set; }
-
     public DateTime UpdatedOn { get; set; } = DateTime.Now;
-
-
-    public DateTime? DeletedOn { get; set; }
-
-    public TimeSpan? TiempoEnCompletar { get; set; }
 
     [Required]
     public bool ParaLlevar { get; set; }
@@ -174,7 +169,7 @@ public class ActualizarProductoReq
     public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
     public bool? Activo { get; set; }
-
+    public string? Imagen { get; set; }
     public DateTime? DeletedOn { get; set; }
 }
 
@@ -198,13 +193,12 @@ public class ActualizarOrdenReq
 
 public class ActualizarOrdenDetalleReq
 {
-    [Required]
     [ForeignKey("Producto")]
-    public int ProductoId { get; set; }
+    public int? ProductoId { get; set; }
 
     [Required]
     [Range(0.1, double.MaxValue, ErrorMessage = "La cantidad debe ser mayor a 0.")]
-    public decimal Cantidad { get; set; }
+    public decimal? Cantidad { get; set; }
 
     public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
